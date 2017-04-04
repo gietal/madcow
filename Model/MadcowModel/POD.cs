@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MadcowModel
 {
-  class Set
+  public class WorkoutSet
   {
-    public Set()
+    public WorkoutSet()
     {
       completedReps = undoneRep;
       maxReps = 5;
@@ -19,15 +19,34 @@ namespace MadcowModel
     // how many reps in this set
     public int completedReps;
     public int maxReps;
+    public float weight;
   }
 
-  class Movement
+  public class WorkoutMovement
   {
-    public List<Set> sets;
+    public List<WorkoutSet> sets = new List<WorkoutSet>();
   }
 
-  class Workout
+  public class Workout
   {
-    public List<Movement> movements;
+    public List<WorkoutMovement> movements = new List<WorkoutMovement>();
+  }
+
+  public class WeightStatus
+  {
+    public enum WeightType
+    {
+      pound,
+      kilogram
+    }
+
+    // lb or kg?
+    public WeightType type = WeightType.pound;
+    public float body = 0;
+    public float squat = 0;
+    public float benchPress = 0;
+    public float overheadPress = 0;
+    public float row = 0;
+    public float deadlift = 0;
   }
 }

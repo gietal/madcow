@@ -14,6 +14,7 @@ namespace MadcowModel
     {
 
     }
+
     public void setCompletedRep(int movementIndex, int setIndex, int repCount)
     {
       if(movementIndex >= workout.movements.Count)
@@ -29,7 +30,7 @@ namespace MadcowModel
       var set = workout.movements[movementIndex].sets[setIndex];
       if (repCount > set.maxReps || repCount < 0)
       {
-        set.completedReps = Set.undoneRep;
+        set.completedReps = WorkoutSet.undoneRep;
       }
       else
       {

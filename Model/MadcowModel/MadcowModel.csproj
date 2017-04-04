@@ -42,6 +42,7 @@
     <Compile Include="POD.cs" />
     <Compile Include="WeightCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkoutGenerator.cs" />
     <Compile Include="WorkoutHistoryProvider.cs" />
     <Compile Include="WorkoutManager.cs" />
   </ItemGroup>
