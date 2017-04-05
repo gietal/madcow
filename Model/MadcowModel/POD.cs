@@ -32,8 +32,13 @@ namespace MadcowModel
       row,
       deadlift
     }
-    Type type = Type.squat;
+    public readonly Type type = Type.squat;
     public List<WorkoutSet> sets = new List<WorkoutSet>();
+
+    public WorkoutMovement(Type type)
+    {
+      this.type = type;
+    }
   }
 
   public class Workout

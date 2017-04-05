@@ -18,7 +18,7 @@ namespace MadcowModel
 
     public WorkoutMovement createWorkoutMovementA(WorkoutMovement.Type type, float targetWeight, float incrementPercentage = 0.125f)
     {
-      var movement = new WorkoutMovement();
+      var movement = new WorkoutMovement(type);
       const int repCount = 5;
 
       float[] weightPercentage = new float[repCount];
@@ -41,16 +41,23 @@ namespace MadcowModel
       return movement;
     }
 
-    public WorkoutMovement createWorkoutMovementB(WorkoutMovement.Type type, float targetWeight)
+    public WorkoutMovement createWorkoutMovementB(WorkoutMovement squatFromWorkoutA, float targetWeight)
     {
-      var movement = new WorkoutMovement();
+      var movement = new WorkoutMovement(WorkoutMovement.Type.squat);
+      
+      return movement;
+    }
+
+    public WorkoutMovement createWorkoutMovementB(WorkoutMovement.Type type, float targetWeight, float incrementPercentage = 0.125f)
+    {
+      var movement = new WorkoutMovement(type);
 
       return movement;
     }
 
     public WorkoutMovement createWorkoutMovementC(WorkoutMovement.Type type, float targetWeight)
     {
-      var movement = new WorkoutMovement();
+      var movement = new WorkoutMovement(type);
 
       return movement;
     }
