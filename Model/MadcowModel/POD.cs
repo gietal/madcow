@@ -24,6 +24,15 @@ namespace MadcowModel
 
   public class WorkoutMovement
   {
+    public enum Type
+    {
+      squat,
+      benchPress,
+      overheadPress,
+      row,
+      deadlift
+    }
+    Type type = Type.squat;
     public List<WorkoutSet> sets = new List<WorkoutSet>();
   }
 
