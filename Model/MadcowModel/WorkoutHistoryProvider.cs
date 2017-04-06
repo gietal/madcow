@@ -12,5 +12,12 @@ namespace MadcowModel
     {
       return new List<Workout>();
     }
+
+    public override Workout getLatestWorkout(Workout.Type type)
+    {
+      // need data service
+      // get 3 latest workout and start walking backward until history.type == type
+      return null;
+    }
   }
 }

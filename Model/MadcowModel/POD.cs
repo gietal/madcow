@@ -48,7 +48,18 @@ namespace MadcowModel
 
   public class Workout
   {
+    public enum Type
+    {
+      A,
+      B,
+      C
+    }
+    public Workout(Workout.Type type)
+    {
+      this.type = type;
+    }
     public List<WorkoutMovement> movements = new List<WorkoutMovement>();
+    public readonly Type type;
   }
 
   public class WeightStatus

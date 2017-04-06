@@ -11,5 +11,6 @@ namespace MadcowModel
     static uint allDays = unchecked((uint)-1);
 
     public abstract List<Workout> getWorkoutHistory(uint previousDays);
+    public abstract Workout getLatestWorkout(Workout.Type type);
   }
 }
