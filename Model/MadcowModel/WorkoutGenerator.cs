@@ -52,7 +52,12 @@ namespace MadcowModel
       return createRampingWeightWorkoutMovement(type, targetWeight, 5, 5, incrementPercentage, 2.5f);
     }
 
-    //public WorkoutMovement createWorko
+    public WorkoutMovement createWorkoutMovementA(WorkoutMovement lastFridayWorkoutA)
+    {
+      // 5x5: Ramping weight to top set of 5 (which should equal the previous Friday's heavy triple)
+      var heavyTriple = lastFridayWorkoutA.sets[4].weight;
+      return createWorkoutMovementA(lastFridayWorkoutA.type, heavyTriple);
+    }
 
     public WorkoutMovement createWorkoutMovementBSquat(WorkoutMovement squatFromWorkoutA)
     {

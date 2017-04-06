@@ -16,7 +16,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutA_1()
+    public void testCreateWorkoutA_firstWeek()
     {
       var movement = testSubject.createWorkoutMovementA(WorkoutMovement.Type.squat, 100, weightIncrement);
 
@@ -36,6 +36,38 @@ namespace UnitTests
       Assert.AreEqual(90, movement.sets[3].weight, "wrong weight");
       Assert.AreEqual(100, movement.sets[4].weight, "wrong weight");
     }
+
+    [TestMethod]
+    public void testCreateWorkoutA_subsequentWeek()
+    {
+      var lastFridayWorkoutC = new WorkoutMovement(WorkoutMovement.Type.squat);
+      lastFridayWorkoutC.sets.Add(new WorkoutSet(5, 50));
+      lastFridayWorkoutC.sets.Add(new WorkoutSet(5, 65));
+      lastFridayWorkoutC.sets.Add(new WorkoutSet(5, 75));
+      lastFridayWorkoutC.sets.Add(new WorkoutSet(5, 90));
+      lastFridayWorkoutC.sets.Add(new WorkoutSet(3, 105));
+      lastFridayWorkoutC.sets.Add(new WorkoutSet(8, 75));
+
+      var movement = testSubject.createWorkoutMovementA(lastFridayWorkoutC);
+
+      // check set number
+      Assert.AreEqual(5, movement.sets.Count, "expected 5 sets");
+
+      // check rep target
+      foreach (var s in movement.sets)
+      {
+        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+      }
+
+      // check weights for each rep
+      Assert.AreEqual(55, movement.sets[0].weight, "wrong weight");
+      Assert.AreEqual(65, movement.sets[1].weight, "wrong weight");
+      Assert.AreEqual(80, movement.sets[2].weight, "wrong weight");
+      Assert.AreEqual(90, movement.sets[3].weight, "wrong weight");
+      Assert.AreEqual(105, movement.sets[4].weight, "wrong weight");
+    }
+
+    //private void testCreatWorkoutA_subsequentWeekHelper()
 
     [TestMethod]
     public void testCreateWorkoutB_squat()
@@ -115,7 +147,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutC_1()
+    public void testCreateWorkoutC()
     {
       var mondayWorkout = new WorkoutMovement(WorkoutMovement.Type.squat);
       mondayWorkout.sets.Add(new WorkoutSet(5, 50));
