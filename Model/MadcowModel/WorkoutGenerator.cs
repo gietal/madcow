@@ -12,7 +12,8 @@ namespace MadcowModel
 
     public float getRoundedWeight(float targetWeight, float minimumPlateWeight = 2.5f)
     {
-      var rounded = (float) Math.Round(targetWeight / (2 * minimumPlateWeight), 0, MidpointRounding.AwayFromZero);
+      var beforeRounded = targetWeight / (2 * minimumPlateWeight);
+      var rounded = (float) Math.Round(beforeRounded, 0, MidpointRounding.AwayFromZero);
       return rounded * 2 * minimumPlateWeight;
     }
 
@@ -51,6 +52,8 @@ namespace MadcowModel
       return createRampingWeightWorkoutMovement(type, targetWeight, 5, 5, incrementPercentage, 2.5f);
     }
 
+    //public WorkoutMovement createWorko
+
     public WorkoutMovement createWorkoutMovementBSquat(WorkoutMovement squatFromWorkoutA)
     {
       var movement = new WorkoutMovement(WorkoutMovement.Type.squat);
@@ -84,9 +87,36 @@ namespace MadcowModel
       return createRampingWeightWorkoutMovement(type, targetWeight, 4, 5, incrementPercentage, 2.5f);
     }
 
-    public WorkoutMovement createWorkoutMovementC(WorkoutMovement.Type type, float targetWeight)
+    public WorkoutMovement createWorkoutMovementB(WorkoutMovement lastWeekWorkoutB)
     {
-      var movement = new WorkoutMovement(type);
+      float targetWeight = getRoundedWeight(lastWeekWorkoutB.sets.Last().weight * (1.025f)); // 2.5% weight increase from last week's workout
+      return createWorkoutMovementB(lastWeekWorkoutB.type, targetWeight);
+    }
+
+    public WorkoutMovement createWorkoutMovementC(WorkoutMovement workoutA)
+    {
+      if(workoutA.sets.Count < 5)
+      {
+        throw new InvalidOperationException("monday's workout has to have 5 sets");
+      }
+
+      var movement = new WorkoutMovement(workoutA.type);
+
+      // 4x5, 1x3, 1x8 
+
+      // First 4 sets are the same as Monday's, 
+      for (int i = 0; i < 4; ++i)
+      {
+        var mondaySet = workoutA.sets[i];
+        movement.sets.Add(new WorkoutSet(mondaySet));
+      }
+
+      // the triple is 2.5% above your Monday top set of 5, 
+      float tripleWeight = getRoundedWeight(workoutA.sets.Last().weight * 1.025f);
+      movement.sets.Add(new WorkoutSet(3, tripleWeight));
+
+      // use the weight from the 3rd set for a final set of 8
+      movement.sets.Add(new WorkoutSet(8, movement.sets[2].weight));
 
       return movement;
     }

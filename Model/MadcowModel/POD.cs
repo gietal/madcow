@@ -13,6 +13,12 @@ namespace MadcowModel
       this.maxReps = maxReps;
       this.weight = weight;
     }
+
+    public WorkoutSet(WorkoutSet other)
+    {
+      this.maxReps = other.maxReps;
+      this.weight = other.weight;
+    }
     public static int undoneRep = -1;
 
     // how many reps in this set
