@@ -8,18 +8,17 @@ namespace MadcowModel
 {
   public class WorkoutSet
   {
-    public WorkoutSet()
+    public WorkoutSet(int maxReps = 5, float weight = 0)
     {
-      completedReps = undoneRep;
-      maxReps = 5;
+      this.maxReps = maxReps;
+      this.weight = weight;
     }
-
     public static int undoneRep = -1;
 
     // how many reps in this set
-    public int completedReps;
-    public int maxReps;
-    public float weight;
+    public int completedReps = undoneRep;
+    public int maxReps = 5;
+    public float weight = 0;
   }
 
   public class WorkoutMovement

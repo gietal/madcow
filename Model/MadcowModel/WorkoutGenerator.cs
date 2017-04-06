@@ -16,43 +16,72 @@ namespace MadcowModel
       return rounded * 2 * minimumPlateWeight;
     }
 
-    public WorkoutMovement createWorkoutMovementA(WorkoutMovement.Type type, float targetWeight, float incrementPercentage = 0.125f)
+    private float[] getRampingWeight(float targetWeight, float incrementPercentage, int setCount)
     {
-      var movement = new WorkoutMovement(type);
-      const int repCount = 5;
-
-      float[] weightPercentage = new float[repCount];
-      for( int i = 0; i < repCount; ++i)
+      float[] weights = new float[setCount];
+      for (int i = 0; i < setCount; ++i)
       {
         // 1 - 4r, 1 - 3r, 1 - 2r, 1 - r, 1
         var reduction = incrementPercentage * i;
-        var index = repCount - 1 - i;
-        weightPercentage[index] = 1.0f - reduction;
+        var index = setCount - 1 - i;
+        weights[index] = (1.0f - reduction) * targetWeight;
       }
+      return weights;
+    }
 
-      foreach (var wp in weightPercentage)
+    private WorkoutMovement createRampingWeightWorkoutMovement(WorkoutMovement.Type type, float targetWeight, int targetSet, int targetRep, float incrementPercentage, float minimumPlate)
+    {
+      var movement = new WorkoutMovement(type);
+
+      var rampingWeight = getRampingWeight(targetWeight, incrementPercentage, targetSet);
+      foreach (var weight in rampingWeight)
       {
         var set = new WorkoutSet();
-        set.maxReps = repCount;
-        set.weight = getRoundedWeight(wp * targetWeight);
+        set.maxReps = targetRep;
+        set.weight = getRoundedWeight(weight, minimumPlate);
         movement.sets.Add(set);
       }
 
       return movement;
     }
 
-    public WorkoutMovement createWorkoutMovementB(WorkoutMovement squatFromWorkoutA, float targetWeight)
+    public WorkoutMovement createWorkoutMovementA(WorkoutMovement.Type type, float targetWeight, float incrementPercentage = 0.125f)
+    {
+      // 5x5:	Ramping weight to top set of 5 (which should equal the previous Friday's heavy triple)
+      return createRampingWeightWorkoutMovement(type, targetWeight, 5, 5, incrementPercentage, 2.5f);
+    }
+
+    public WorkoutMovement createWorkoutMovementBSquat(WorkoutMovement squatFromWorkoutA)
     {
       var movement = new WorkoutMovement(WorkoutMovement.Type.squat);
-      
+
+      // 4x5: First 3 sets are the same as Monday, the 4th set is repeating the 3rd set again
+      if(squatFromWorkoutA.sets.Count < 3 || squatFromWorkoutA.type != WorkoutMovement.Type.squat)
+      {
+        throw new InvalidOperationException("squat from workout A needed to have at least 3");
+      }
+
+      for(int i = 0; i < 3; ++i)
+      {
+        var previousSet = squatFromWorkoutA.sets[i];
+        movement.sets.Add(new WorkoutSet(5, previousSet.weight));
+      }
+
+      // the 4th one is repeating the 3rd one
+      movement.sets.Add(new WorkoutSet(5, movement.sets[2].weight));
+
       return movement;
     }
 
     public WorkoutMovement createWorkoutMovementB(WorkoutMovement.Type type, float targetWeight, float incrementPercentage = 0.125f)
     {
-      var movement = new WorkoutMovement(type);
+      if(type == WorkoutMovement.Type.squat)
+      {
+        throw new InvalidOperationException("use createWorkoutMovementBSquat for squat");
+      }
 
-      return movement;
+      // 4x5 Ramping weight to top set of 5
+      return createRampingWeightWorkoutMovement(type, targetWeight, 4, 5, incrementPercentage, 2.5f);
     }
 
     public WorkoutMovement createWorkoutMovementC(WorkoutMovement.Type type, float targetWeight)

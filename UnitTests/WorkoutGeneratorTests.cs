@@ -40,7 +40,14 @@ namespace UnitTests
     [TestMethod]
     public void testCreateWorkoutB_squat()
     {
-      var movement = testSubject.createWorkoutMovementB(WorkoutMovement.Type.squat, 100);
+      var prevSquat = new WorkoutMovement(WorkoutMovement.Type.squat);
+      prevSquat.sets.Add(new WorkoutSet(5, 50));
+      prevSquat.sets.Add(new WorkoutSet(5, 65));
+      prevSquat.sets.Add(new WorkoutSet(5, 75));
+      prevSquat.sets.Add(new WorkoutSet(5, 90));
+      prevSquat.sets.Add(new WorkoutSet(5, 100));
+
+      var movement = testSubject.createWorkoutMovementBSquat(prevSquat);
 
       // check set number
       Assert.AreEqual(4, movement.sets.Count, "wrong set number");
@@ -52,14 +59,14 @@ namespace UnitTests
       }
 
       // check weights for each rep
-      Assert.AreEqual(50, movement.sets[0].weight, "wrong weight");
-      Assert.AreEqual(65, movement.sets[1].weight, "wrong weight");
-      Assert.AreEqual(75, movement.sets[2].weight, "wrong weight");
-      Assert.AreEqual(75, movement.sets[3].weight, "wrong weight");
+      Assert.AreEqual(prevSquat.sets[0].weight, movement.sets[0].weight, "wrong weight");
+      Assert.AreEqual(prevSquat.sets[1].weight, movement.sets[1].weight, "wrong weight");
+      Assert.AreEqual(prevSquat.sets[2].weight, movement.sets[2].weight, "wrong weight");
+      Assert.AreEqual(prevSquat.sets[2].weight, movement.sets[3].weight, "wrong weight");
     }
 
     [TestMethod]
-    public void testCreateWorkoutB_overhead()
+    public void testCreateWorkoutB()
     {
       // press and deadlift
       var movement = testSubject.createWorkoutMovementB(WorkoutMovement.Type.overheadPress, 100);
