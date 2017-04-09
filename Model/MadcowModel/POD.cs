@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
+using Newtonsoft.Json;
 
 namespace MadcowModel
 {
+  public interface IBusinessEntity
+  {
+    int ID { get; set; }
+  }
+
+  public abstract class BusinessEntityBase: IBusinessEntity
+  {
+    public BusinessEntityBase()
+    {
+      ID = 0;
+    }
+    [PrimaryKey, AutoIncrement]
+    public int ID { get; set; }
+  }
+
   public class WorkoutSet
   {
+    [JsonConstructor]
     public WorkoutSet(int maxReps = 5, float weight = 0)
     {
       this.maxReps = maxReps;
@@ -37,10 +55,11 @@ namespace MadcowModel
       row,
       deadlift
     }
-    public readonly Type type = Type.squat;
+    public Type type = Type.squat;
     public List<WorkoutSet> sets = new List<WorkoutSet>();
 
-    public WorkoutMovement(Type type)
+    [JsonConstructor]
+    public WorkoutMovement(Type type = Type.squat)
     {
       this.type = type;
     }
@@ -56,14 +75,17 @@ namespace MadcowModel
     }
 
     public List<WorkoutMovement> movements = new List<WorkoutMovement>();
-    public readonly Type type;
+    public Type type;
 
-    public Workout(Workout.Type type)
+    [JsonConstructor]
+    public Workout(Workout.Type type = Type.A)
     {
       this.type = type;
     }
 
     // helper 
+
+    [JsonIgnore]
     public WorkoutMovement squat
     {
       get
@@ -72,6 +94,7 @@ namespace MadcowModel
       }
     }
 
+    [JsonIgnore]
     public WorkoutMovement benchPress
     {
       get
@@ -80,6 +103,7 @@ namespace MadcowModel
       }
     }
 
+    [JsonIgnore]
     public WorkoutMovement row
     {
       get
@@ -88,6 +112,7 @@ namespace MadcowModel
       }
     }
 
+    [JsonIgnore]
     public WorkoutMovement overheadPress
     {
       get
@@ -96,6 +121,7 @@ namespace MadcowModel
       }
     }
 
+    [JsonIgnore]
     public WorkoutMovement deadlift
     {
       get

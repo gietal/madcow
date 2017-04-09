@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadcowModel", "..\Model\MadcowModel\MadcowModel.csproj", "{6A795DFF-DD71-4164-9345-0D22F2A4B8FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "..\ConsoleTest\ConsoleTest.csproj", "{B067154C-3DB0-4E06-997A-FF54EA39905E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6A795DFF-DD71-4164-9345-0D22F2A4B8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A795DFF-DD71-4164-9345-0D22F2A4B8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A795DFF-DD71-4164-9345-0D22F2A4B8FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B067154C-3DB0-4E06-997A-FF54EA39905E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B067154C-3DB0-4E06-997A-FF54EA39905E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B067154C-3DB0-4E06-997A-FF54EA39905E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B067154C-3DB0-4E06-997A-FF54EA39905E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
