@@ -49,7 +49,7 @@ namespace MadcowModel
       foreach (var weight in rampingWeight)
       {
         var set = new WorkoutSet();
-        set.maxReps = targetRep;
+        set.targetReps = targetRep;
         set.weight = getRoundedWeight(weight, minimumPlate);
         movement.sets.Add(set);
       }

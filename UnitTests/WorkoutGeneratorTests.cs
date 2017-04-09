@@ -43,7 +43,7 @@ namespace UnitTests
       // check rep target
       foreach (var s in m.sets)
       {
-        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+        Assert.AreEqual(5, s.targetReps, "expected 5 reps on every set");
       }
 
       // check weights for each rep
@@ -65,7 +65,7 @@ namespace UnitTests
       // check rep target
       foreach(var s in movement.sets)
       {
-        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+        Assert.AreEqual(5, s.targetReps, "expected 5 reps on every set");
       }
 
       // check weights for each rep
@@ -95,7 +95,7 @@ namespace UnitTests
       // check rep target
       foreach (var s in movement.sets)
       {
-        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+        Assert.AreEqual(5, s.targetReps, "expected 5 reps on every set");
       }
 
       // check weights for each rep
@@ -126,7 +126,7 @@ namespace UnitTests
       // check rep target
       foreach (var s in movement.sets)
       {
-        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+        Assert.AreEqual(5, s.targetReps, "expected 5 reps on every set");
       }
 
       // check weights for each rep
@@ -148,7 +148,7 @@ namespace UnitTests
       // check rep target
       foreach (var s in movement.sets)
       {
-        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+        Assert.AreEqual(5, s.targetReps, "expected 5 reps on every set");
       }
 
       // check weights for each rep
@@ -175,7 +175,7 @@ namespace UnitTests
       // check rep target
       foreach (var s in movement.sets)
       {
-        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+        Assert.AreEqual(5, s.targetReps, "expected 5 reps on every set");
       }
 
       // check weights for each rep
@@ -204,10 +204,10 @@ namespace UnitTests
       for (int i = 0; i < 4; ++i)
       {
         var s = movement.sets[i];
-        Assert.AreEqual(5, s.maxReps, "wrong reps");
+        Assert.AreEqual(5, s.targetReps, "wrong reps");
       }
-      Assert.AreEqual(3, movement.sets[4].maxReps, "wrong reps");
-      Assert.AreEqual(8, movement.sets[5].maxReps, "wrong reps");
+      Assert.AreEqual(3, movement.sets[4].targetReps, "wrong reps");
+      Assert.AreEqual(8, movement.sets[5].targetReps, "wrong reps");
 
       // check weights for each rep
       Assert.AreEqual(50, movement.sets[0].weight, "wrong weight");

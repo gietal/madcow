@@ -26,22 +26,22 @@ namespace MadcowModel
   public class WorkoutSet
   {
     [JsonConstructor]
-    public WorkoutSet(int maxReps = 5, float weight = 0)
+    public WorkoutSet(int targetReps = 5, float weight = 0)
     {
-      this.maxReps = maxReps;
+      this.targetReps = targetReps;
       this.weight = weight;
     }
 
     public WorkoutSet(WorkoutSet other)
     {
-      this.maxReps = other.maxReps;
+      this.targetReps = other.targetReps;
       this.weight = other.weight;
     }
     public static int undoneRep = -1;
 
     // how many reps in this set
     public int completedReps = undoneRep;
-    public int maxReps = 5;
+    public int targetReps = 5;
     public float weight = 0;
   }
 

@@ -87,7 +87,7 @@ namespace MadcowModel
       }
 
       var set = workout.movements[movementIndex].sets[setIndex];
-      if (repCount > set.maxReps || repCount < 0)
+      if (repCount > set.targetReps || repCount < 0)
       {
         set.completedReps = WorkoutSet.undoneRep;
       }
