@@ -16,7 +16,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutA_firstWeek()
+    public void testCreateWorkoutMovementA_firstWeek()
     {
       var movement = testSubject.createWorkoutMovementA(WorkoutMovement.Type.squat, 100, weightIncrement);
 
@@ -38,7 +38,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutA_subsequentWeek()
+    public void testCreateWorkoutMovementA_subsequentWeek()
     {
       var lastFridayWorkoutC = new WorkoutMovement(WorkoutMovement.Type.squat);
       lastFridayWorkoutC.sets.Add(new WorkoutSet(5, 50));
@@ -70,7 +70,7 @@ namespace UnitTests
     //private void testCreatWorkoutA_subsequentWeekHelper()
 
     [TestMethod]
-    public void testCreateWorkoutB_squat()
+    public void testCreateWorkoutMovementB_squat()
     {
       var prevSquat = new WorkoutMovement(WorkoutMovement.Type.squat);
       prevSquat.sets.Add(new WorkoutSet(5, 50));
@@ -98,7 +98,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutB_firstWeek()
+    public void testCreateWorkoutMovementB_firstWeek()
     {
       // press and deadlift
       var movement = testSubject.createWorkoutMovementB(WorkoutMovement.Type.overheadPress, 100);
@@ -120,7 +120,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutB_subsequentWeek()
+    public void testCreateWorkoutMovementB_subsequentWeek()
     {
       var lastWeekWorkout = new WorkoutMovement(WorkoutMovement.Type.deadlift);
       lastWeekWorkout.sets.Add(new WorkoutSet(5, 65));
@@ -147,7 +147,7 @@ namespace UnitTests
     }
 
     [TestMethod]
-    public void testCreateWorkoutC()
+    public void testCreateWorkoutMovementC()
     {
       var mondayWorkout = new WorkoutMovement(WorkoutMovement.Type.squat);
       mondayWorkout.sets.Add(new WorkoutSet(5, 50));
@@ -178,5 +178,38 @@ namespace UnitTests
       Assert.AreEqual(105, movement.sets[4].weight, "wrong weight");
       Assert.AreEqual(75, movement.sets[5].weight, "wrong weight");
     }
+
+
+    /// creating the whole workout test ///
+    [TestMethod]
+    public void testCreateWorkoutA_firstWeek()
+    {
+      Assert.Fail("not implemented");
+    }
+
+    [TestMethod]
+    public void testCreateWorkoutA_subsequentWeek()
+    {
+      Assert.Fail("not implemented");
+    }
+
+    [TestMethod]
+    public void testCreateWorkoutB_firstWeek()
+    {
+      Assert.Fail("not implemented");
+    }
+
+    [TestMethod]
+    public void testCreateWorkoutB_subsequentWeek()
+    {
+      Assert.Fail("not implemented");
+    }
+
+    [TestMethod]
+    public void testCreateWorkoutC_subsequentWeek()
+    {
+      Assert.Fail("not implemented");
+    }
+
   }
 }

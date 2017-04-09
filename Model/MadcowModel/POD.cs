@@ -54,12 +54,69 @@ namespace MadcowModel
       B,
       C
     }
+
+    public List<WorkoutMovement> movements = new List<WorkoutMovement>();
+    public readonly Type type;
+
     public Workout(Workout.Type type)
     {
       this.type = type;
     }
-    public List<WorkoutMovement> movements = new List<WorkoutMovement>();
-    public readonly Type type;
+
+    // helper 
+    public WorkoutMovement squat
+    {
+      get
+      {
+        return getMovement(WorkoutMovement.Type.squat);
+      }
+    }
+
+    public WorkoutMovement benchPress
+    {
+      get
+      {
+        return getMovement(WorkoutMovement.Type.benchPress);
+      }
+    }
+
+    public WorkoutMovement row
+    {
+      get
+      {
+        return getMovement(WorkoutMovement.Type.row);
+      }
+    }
+
+    public WorkoutMovement overheadPress
+    {
+      get
+      {
+        return getMovement(WorkoutMovement.Type.overheadPress);
+      }
+    }
+
+    public WorkoutMovement deadlift
+    {
+      get
+      {
+        return getMovement(WorkoutMovement.Type.deadlift);
+      }
+    }
+
+    private WorkoutMovement getMovement(WorkoutMovement.Type movementType)
+    {
+      foreach(var m in movements)
+      {
+        if (m.type == movementType)
+        {
+          return m;
+        }
+      }
+      return null;
+    }
+
+    
   }
 
   public class WeightStatus

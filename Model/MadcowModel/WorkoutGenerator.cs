@@ -17,6 +17,17 @@ namespace MadcowModel
       return rounded * 2 * minimumPlateWeight;
     }
 
+    public float getStartingWeight(float original5RM, int matchPRInWeek = 4)
+    {
+      if( matchPRInWeek <= 1 )
+      {
+        throw new InvalidOperationException("invalid matching PR week count");
+      }
+
+      var startingWeight = original5RM * Math.Pow((1 / 1.025), (matchPRInWeek - 1));
+      return getRoundedWeight((float)startingWeight);
+    }
+
     private float[] getRampingWeight(float targetWeight, float incrementPercentage, int setCount)
     {
       float[] weights = new float[setCount];
@@ -52,11 +63,11 @@ namespace MadcowModel
       return createRampingWeightWorkoutMovement(type, targetWeight, 5, 5, incrementPercentage, 2.5f);
     }
 
-    public WorkoutMovement createWorkoutMovementA(WorkoutMovement lastFridayWorkoutA)
+    public WorkoutMovement createWorkoutMovementA(WorkoutMovement lastFridayWorkoutC)
     {
       // 5x5: Ramping weight to top set of 5 (which should equal the previous Friday's heavy triple)
-      var heavyTriple = lastFridayWorkoutA.sets[4].weight;
-      return createWorkoutMovementA(lastFridayWorkoutA.type, heavyTriple);
+      var heavyTriple = lastFridayWorkoutC.sets[4].weight;
+      return createWorkoutMovementA(lastFridayWorkoutC.type, heavyTriple);
     }
 
     public WorkoutMovement createWorkoutMovementBSquat(WorkoutMovement squatFromWorkoutA)
@@ -125,5 +136,60 @@ namespace MadcowModel
 
       return movement;
     }
+
+    /// creating whole workout ///
+    /// new workouts:
+    /// A: use initial weight
+    /// subsequent workouts:
+    /// for workout A: previous workout C
+    // for workout B: previous week's workout B
+    // for workout C: previous workout A
+
+    public Workout createWorkoutA(WeightStatus targetWeight)
+    {
+      var workout = new Workout(Workout.Type.A);
+      workout.movements.Add(createWorkoutMovementA(WorkoutMovement.Type.squat, targetWeight.squat));
+      workout.movements.Add(createWorkoutMovementA(WorkoutMovement.Type.benchPress, targetWeight.benchPress));
+      workout.movements.Add(createWorkoutMovementA(WorkoutMovement.Type.row, targetWeight.row));
+      return workout;
+    }
+
+    public Workout createWorkoutA(Workout latestWorkoutC)
+    {
+      var workout = new Workout(Workout.Type.A);
+      workout.movements.Add(createWorkoutMovementA(latestWorkoutC.squat));
+      workout.movements.Add(createWorkoutMovementA(latestWorkoutC.benchPress));
+      workout.movements.Add(createWorkoutMovementA(latestWorkoutC.row));
+      return workout;
+    }
+
+    public Workout createWorkoutB(WeightStatus targetWeight, Workout latestWorkoutA)
+    {
+      var workout = new Workout(Workout.Type.B);
+      workout.movements.Add(createWorkoutMovementBSquat(latestWorkoutA.squat));
+      workout.movements.Add(createWorkoutMovementB(WorkoutMovement.Type.overheadPress, targetWeight.overheadPress));
+      workout.movements.Add(createWorkoutMovementB(WorkoutMovement.Type.deadlift, targetWeight.deadlift));
+      return workout;
+    }
+
+    public Workout createWorkoutB(Workout latestWorkoutA, Workout latestWorkoutB)
+    {
+      var workout = new Workout(Workout.Type.B);
+      workout.movements.Add(createWorkoutMovementBSquat(latestWorkoutA.squat));
+      workout.movements.Add(createWorkoutMovementB(latestWorkoutB.overheadPress));
+      workout.movements.Add(createWorkoutMovementB(latestWorkoutB.deadlift));
+      return workout;
+    }
+    
+    public Workout createWorkoutC(Workout latestWorkoutA)
+    {
+      var workout = new Workout(Workout.Type.A);
+      workout.movements.Add(createWorkoutMovementA(latestWorkoutA.squat));
+      workout.movements.Add(createWorkoutMovementA(latestWorkoutA.benchPress));
+      workout.movements.Add(createWorkoutMovementA(latestWorkoutA.row));
+      return workout;
+    }
+
+    
   }
 }
