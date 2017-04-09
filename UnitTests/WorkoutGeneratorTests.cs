@@ -9,10 +9,49 @@ namespace UnitTests
   {
     WorkoutGenerator testSubject;
     float weightIncrement = 0.125f; // 12.5%
+    WeightStatus startingWeight;
+
     [TestInitialize]
     public void TestInitialize()
     {
       testSubject = new WorkoutGenerator();
+      startingWeight = new WeightStatus();
+      startingWeight.squat = 100;
+      startingWeight.benchPress = 100;
+      startingWeight.row = 100;
+      startingWeight.overheadPress = 100;
+      startingWeight.deadlift = 100;
+    }
+
+    [TestMethod]
+    public void testGetStartingWeight()
+    {
+      var matchPRWeek = 4;
+      Assert.AreEqual(95, testSubject.getStartingWeight(100, matchPRWeek), "wrong starting weight");
+      Assert.AreEqual(140, testSubject.getStartingWeight(150, matchPRWeek), "wrong starting weight");
+      Assert.AreEqual(185, testSubject.getStartingWeight(200, matchPRWeek), "wrong starting weight");
+      Assert.AreEqual(215, testSubject.getStartingWeight(230, matchPRWeek), "wrong starting weight");
+      Assert.AreEqual(310, testSubject.getStartingWeight(335, matchPRWeek), "wrong starting weight");
+
+    }
+
+    private void validateWorkoutMovementA(WorkoutMovement m, float w1, float w2, float w3, float w4, float w5)
+    {
+      // check set number
+      Assert.AreEqual(5, m.sets.Count, "expected 5 sets");
+
+      // check rep target
+      foreach (var s in m.sets)
+      {
+        Assert.AreEqual(5, s.maxReps, "expected 5 reps on every set");
+      }
+
+      // check weights for each rep
+      Assert.AreEqual(w1, m.sets[0].weight, "wrong weight");
+      Assert.AreEqual(w2, m.sets[1].weight, "wrong weight");
+      Assert.AreEqual(w3, m.sets[2].weight, "wrong weight");
+      Assert.AreEqual(w4, m.sets[3].weight, "wrong weight");
+      Assert.AreEqual(w5, m.sets[4].weight, "wrong weight");
     }
 
     [TestMethod]
@@ -184,7 +223,23 @@ namespace UnitTests
     [TestMethod]
     public void testCreateWorkoutA_firstWeek()
     {
-      Assert.Fail("not implemented");
+      var workout = testSubject.createWorkoutA(startingWeight);
+      var squat = workout.squat;
+      var bench = workout.benchPress;
+      var row = workout.row;
+
+      Assert.AreEqual(3, workout.movements.Count);
+      Assert.IsNotNull(squat, "squat is null");
+      Assert.IsNotNull(bench, "squat is null");
+      Assert.IsNotNull(row, "squat is null");
+      
+      // all 3 movements has same rep and weight
+      for(int i = 0; i < 3; ++i)
+      {
+        var move = workout.movements[i];
+
+        validateWorkoutMovementA(move, 50, 65, 75, 90, 100);
+      }
     }
 
     [TestMethod]
@@ -196,6 +251,9 @@ namespace UnitTests
     [TestMethod]
     public void testCreateWorkoutB_firstWeek()
     {
+      var workoutA = testSubject.createWorkoutA(startingWeight);
+      var workoutB = testSubject.createWorkoutB(startingWeight, workoutA);
+
       Assert.Fail("not implemented");
     }
 
