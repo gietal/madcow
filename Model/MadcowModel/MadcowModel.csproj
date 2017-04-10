@@ -35,6 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppModel.cs" />
+    <Compile Include="Database\DatabaseEntity.cs" />
+    <Compile Include="Database\DatabaseProvider.cs" />
     <Compile Include="Database\MadcowDatabase.cs" />
     <Compile Include="IWorkoutHistoryProvider.cs" />
     <Compile Include="POD.cs" />

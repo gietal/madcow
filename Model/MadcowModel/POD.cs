@@ -65,7 +65,7 @@ namespace MadcowModel
     }
   }
 
-  public class Workout
+  public class Workout: BusinessEntityBase
   {
     public enum Type
     {
@@ -76,6 +76,7 @@ namespace MadcowModel
 
     public List<WorkoutMovement> movements = new List<WorkoutMovement>();
     public Type type;
+    public DateTime createdDate = DateTime.Now;
 
     [JsonConstructor]
     public Workout(Workout.Type type = Type.A)
